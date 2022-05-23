@@ -77,12 +77,6 @@ public class StringFileOperationTest extends SupportShareTest {
     }
 
     @Test
-    public void writeShouldReturnFalseWhenPathIsIncorrect() {
-        //Then
-        assertFalse(sfo.write("src/test/resources/test_files/", refItemOperationForItemXFile));
-    }
-
-    @Test
     public void writeShouldReturnFalseWhenContentIsNull() {
         //Then
         assertFalse(sfo.write("src/test/resources/test_files/ItemX.csv", null));
