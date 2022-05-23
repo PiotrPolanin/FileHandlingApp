@@ -14,7 +14,7 @@ public class Item {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item", fetch = FetchType.EAGER)
     @Column(name = "item_operations")
     private final Set<ItemOperation> operations = new HashSet<>();
 
@@ -46,7 +46,6 @@ public class Item {
         return "Item [" +
                 "id: " + id +
                 ", name: " + name +
-                ", operations: " + operations +
                 ']';
     }
 

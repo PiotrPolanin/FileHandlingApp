@@ -14,6 +14,8 @@ public class ItemOperation {
     private ItemOperationType operationType;
     @Column(name = "amount", nullable = false)
     private Integer amount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Item item;
 
     public ItemOperation(ItemOperationType operationType, Integer amount) {
         this.operationType = operationType;
@@ -21,6 +23,10 @@ public class ItemOperation {
     }
 
     public ItemOperation() {
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public Long getId() {
@@ -33,6 +39,10 @@ public class ItemOperation {
 
     public Integer getAmount() {
         return amount;
+    }
+
+    public Item getItem() {
+        return item;
     }
 
     @Override
