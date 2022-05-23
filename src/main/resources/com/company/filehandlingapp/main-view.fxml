@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="mainPane" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.filehandlingapp.MainController">
+    <children>
+        <BorderPane>
+            <center>
+                <TableView fx:id="itemTable" BorderPane.alignment="CENTER">
+                    <columns>
+                        <TableColumn fx:id="tableColumnOrdinalNumber" maxWidth="-1.0" minWidth="300.0" prefWidth="300.0" text="No" />
+                        <TableColumn fx:id="tableColumnItemName" maxWidth="-1.0" minWidth="700.0" prefWidth="700.0" text="Name" />
+                    </columns>
+                    <BorderPane.margin>
+                        <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
+                    </BorderPane.margin>
+                </TableView>
+            </center>
+            <bottom>
+                <FlowPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+                    <opaqueInsets>
+                        <Insets top="5.0" />
+                    </opaqueInsets>
+                </FlowPane>
+            </bottom>
+            <top>
+                <FlowPane BorderPane.alignment="CENTER">
+                    <children>
+                        <MenuBar fx:id="menuBar" prefWidth="1247.0">
+                            <menus>
+                                <Menu mnemonicParsing="false" text="File">
+                                    <items>
+                                        <MenuItem fx:id="closeAppFromMenuItem" mnemonicParsing="false" text="Close">
+                                            <accelerator>
+                                                <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                            </accelerator>
+                                        </MenuItem>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="About" />
+                                    </items>
+                                </Menu>
+                            </menus>
+                        </MenuBar>
+                        <ButtonBar>
+                            <buttons>
+                                <Button fx:id="addItemButton" layoutX="20.0" layoutY="10.0" mnemonicParsing="false" text="Add" />
+                                <Button fx:id="deleteItemButton" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="generateReportButton" layoutX="288.0" layoutY="10.0" mnemonicParsing="false" text="Report" />
+                            </buttons>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </ButtonBar>
+                    </children>
+                </FlowPane>
+            </top>
+        </BorderPane>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</Pane>

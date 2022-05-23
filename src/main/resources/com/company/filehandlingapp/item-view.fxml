@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="pane" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.filehandlingapp.ItemController">
+    <children>
+        <BorderPane>
+            <bottom>
+                <ToolBar BorderPane.alignment="CENTER">
+                    <items>
+                        <Button fx:id="saveButton" mnemonicParsing="false" text="Save" translateX="15.0" />
+                        <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" translateX="23.0" />
+                        <Button fx:id="importButton" mnemonicParsing="false" text="Import" translateX="30.0" />
+                        <Button fx:id="reportButton" mnemonicParsing="false" text="Report" translateX="40.0" />
+                    </items>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+                </ToolBar>
+            </bottom>
+            <center>
+                <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                    <children>
+                        <GridPane alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label alignment="CENTER" text="Item name" textAlignment="CENTER" translateX="25.0">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="itemNameTextField" GridPane.columnIndex="1" />
+                            </children>
+                        </GridPane>
+                        <Label text="Operation Details">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="10.0" top="10.0" />
+                            </padding>
+                        </Label>
+                        <GridPane alignment="CENTER" vgap="15.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label alignment="CENTER" text="Type" textAlignment="CENTER" translateX="45.0">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <ChoiceBox fx:id="operationTypeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                                <TextField fx:id="operationAmountTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label alignment="CENTER" text="Amount" textAlignment="CENTER" translateX="35.0" GridPane.rowIndex="1">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="addOperationButton" mnemonicParsing="false" text="Add" translateX="42.0" GridPane.rowIndex="2" />
+                                <Button fx:id="deleteOperationButton" layoutX="10.0" layoutY="134.0" mnemonicParsing="false" text="Delete" translateX="36.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            </children>
+                        </GridPane>
+                        <TableView fx:id="itemOperationTable" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" tableMenuButtonVisible="true">
+                            <columns>
+                                <TableColumn fx:id="tableColumnOperationType" prefWidth="75.0" text="Type" />
+                                <TableColumn fx:id="tableColumnOperationAmount" prefWidth="75.0" text="Amount" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                            <VBox.margin>
+                                <Insets bottom="15.0" top="15.0" />
+                            </VBox.margin>
+                        </TableView>
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </VBox>
+            </center>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+        </BorderPane>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+</Pane>
