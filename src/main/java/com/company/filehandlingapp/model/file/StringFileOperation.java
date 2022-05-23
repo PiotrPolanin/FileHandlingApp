@@ -30,14 +30,12 @@ public class StringFileOperation implements FileOperation<String> {
     public boolean write(String path, List<String> content) {
         if (path != null && !path.isEmpty() && content != null && content.size() > 0) {
             Path filePath = Paths.get(path);
-            if (!Files.exists(filePath)) {
-                String stringSequence = String.join(LINE_SEPARATOR, content);
-                try {
-                    Files.writeString(filePath, stringSequence);
-                    return true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            String stringSequence = String.join(LINE_SEPARATOR, content);
+            try {
+                Files.writeString(filePath, stringSequence);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return false;
