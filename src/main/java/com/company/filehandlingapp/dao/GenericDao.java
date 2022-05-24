@@ -2,10 +2,11 @@ package com.company.filehandlingapp.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 public interface GenericDao<T, ID extends Serializable> {
 
-    T findById(ID identification);
+    Optional<T> findById(ID identification);
 
     List<T> findAll();
 

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -24,8 +25,9 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements Gene
     }
 
     @Override
-    public T findById(ID identification) {
-        return getInTransaction(session -> session.find(entityClass, identification));
+    public Optional<T> findById(ID identification) {
+        T entity = getInTransaction(session -> session.find(entityClass, identification));
+        return Optional.ofNullable(entity);
     }
 
     @Override
@@ -45,7 +47,7 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements Gene
 
     @Override
     public void deleteById(ID identification) {
-        T entity = findById(identification);
+        T entity = findById(identification).orElseThrow(() -> new RuntimeException(String.format("Entity %s with id %s not found", entityClass.getName(), identification)));
         runInTransaction(session -> session.remove(entity));
     }
 
