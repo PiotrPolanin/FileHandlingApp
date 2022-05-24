@@ -9,15 +9,22 @@ import com.company.filehandlingapp.model.item.ItemOperationType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
@@ -37,9 +44,11 @@ public class ItemController implements Initializable {
     @FXML
     private Button saveButton;
     @FXML
+    private Button cancelButton;
+    @FXML
     private Button importButton;
     @FXML
-    private Button cancelButton;
+    private Button reportButton;
     @FXML
     private Button addOperationButton;
     @FXML
@@ -52,9 +61,13 @@ public class ItemController implements Initializable {
     private TableColumn<ItemOperation, Integer> tableColumnOperationAmount;
     private ObservableList<ItemOperation> itemOperations;
     private ItemDao itemDao;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    private static final String FXML_FILE_NAME_FOR_REPORT_VIEW = "report-view.fxml";
     private static final String DEFAULT_TITLE_MESSAGE = "Message";
     private static final String ADD_ITEM_OPERATION_ERROR_MESSAGE = "Type and amount attributes are required";
     private static final String SAVE_ITEM_ERROR_MESSAGE = "Name and at least one operation are required";
+    private static final int MIN_REPORT_PANE_WIDTH = 350;
+    private static final int MIN_REPORT_PANE_HEIGHT = 300;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,7 +85,7 @@ public class ItemController implements Initializable {
         tableColumnOperationType.setCellValueFactory(new PropertyValueFactory<>("operationType"));
         tableColumnOperationAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         itemOperations = FXCollections.observableArrayList();
-        itemOperationTable.setEditable(true);
+        itemOperationTable.setEditable(false);
         itemOperationTable.setItems(itemOperations);
         itemOperationTable.setRowFactory(param -> {
             final TableRow<ItemOperation> row = new TableRow();
@@ -85,7 +98,6 @@ public class ItemController implements Initializable {
             });
             return row;
         });
-
         itemOperationTable.setPlaceholder(new Label(""));
     }
 
@@ -106,19 +118,34 @@ public class ItemController implements Initializable {
             event.consume();
         });
 
+        deleteOperationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            deleteItemOperation();
+            event.consume();
+        });
+
         importButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             importData();
             event.consume();
         });
+
+        reportButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            openReportView();
+            event.consume();
+        });
+    }
+
+    private Item createItem(String name, List<ItemOperation> operations) {
+        Item item = new Item(name);
+        operations.forEach(io -> {
+            io.setItem(item);
+            item.addOperation(io);
+        });
+        return item;
     }
 
     private void saveItem() {
         if (!itemNameTextField.getText().isEmpty() && itemOperations.size() > 0) {
-            Item newItem = new Item(itemNameTextField.getText());
-            itemOperations.forEach(io -> {
-                io.setItem(newItem);
-                newItem.addOperation(io);
-            });
+            Item newItem = createItem(itemNameTextField.getText(), itemOperations);
             itemDao.save(newItem);
             setInitialStateOfItemViewComponents();
             closeItemView();
@@ -138,6 +165,14 @@ public class ItemController implements Initializable {
             operationAmountTextField.clear();
         } else {
             showAlert("Item operation message", DEFAULT_TITLE_MESSAGE, ADD_ITEM_OPERATION_ERROR_MESSAGE);
+        }
+    }
+
+    private void deleteItemOperation() {
+        int selectedTableRowIndex = itemOperationTable.getSelectionModel().getSelectedIndex();
+        if (selectedTableRowIndex >= 0) {
+            ItemOperation selectedItemOperation = itemOperationTable.getSelectionModel().getSelectedItem();
+            itemOperations.remove(selectedItemOperation);
         }
     }
 
@@ -183,6 +218,33 @@ public class ItemController implements Initializable {
     private void closeItemView() {
         Stage stage = (Stage) pane.getScene().getWindow();
         stage.close();
+    }
+
+    private void openReportView() {
+        if (!itemNameTextField.getText().isEmpty() && itemOperations.size() > 0) {
+            Item item = createItem(itemNameTextField.getText(), itemOperations);
+            URL reportViewResource = ItemController.class.getResource(ItemController.FXML_FILE_NAME_FOR_REPORT_VIEW);
+            if (reportViewResource != null) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(reportViewResource);
+                    Pane reportView = loader.load();
+                    Stage reportStage = new Stage();
+                    reportStage.initModality(Modality.APPLICATION_MODAL);
+                    reportStage.setTitle("Report");
+                    reportStage.setScene(new Scene(reportView, ItemController.MIN_REPORT_PANE_WIDTH, ItemController.MIN_REPORT_PANE_HEIGHT));
+                    reportStage.setResizable(false);
+                    ReportController reportController = loader.getController();
+                    reportController.generateReport(item);
+                    reportStage.showAndWait();
+                } catch (IOException e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
+            } else {
+                LOGGER.info("Resource is null");
+            }
+        } else {
+            showAlert("Report operation message", DEFAULT_TITLE_MESSAGE, SAVE_ITEM_ERROR_MESSAGE);
+        }
     }
 
 }

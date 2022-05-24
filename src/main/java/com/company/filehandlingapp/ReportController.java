@@ -1,13 +1,12 @@
 package com.company.filehandlingapp;
 
+import com.company.filehandlingapp.model.file.FileOperation;
 import com.company.filehandlingapp.model.file.StringFileOperation;
 import com.company.filehandlingapp.model.item.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -36,8 +35,8 @@ public class ReportController implements Initializable {
     private Button cancelButton;
     private FileChooser fileChooser;
     private ItemOperationReportCalculator calculator;
-    private ItemOperationReportGenerator reportGenerator;
-    private StringFileOperation sfo;
+    private OperationGenerator<ItemOperationReport> reportGenerator;
+    private FileOperation sfo;
     private ItemOperationReport report;
 
     @Override
@@ -82,8 +81,6 @@ public class ReportController implements Initializable {
             ItemOperationReport newReport = optionalReport.get();
             showReportDetails(newReport);
             this.report = newReport;
-        } else {
-            showAlert("Error", "title", "message");
         }
     }
 
@@ -96,19 +93,9 @@ public class ReportController implements Initializable {
         }
     }
 
-    private void showAlert(String header, String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setHeaderText(header);
-        alert.setTitle(title);
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                alert.close();
-            }
-        });
-    }
-
     private void closeReportView() {
         Stage stage = (Stage) pane.getScene().getWindow();
         stage.close();
     }
+
 }

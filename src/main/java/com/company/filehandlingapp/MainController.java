@@ -35,7 +35,6 @@ public class MainController implements Initializable {
     private static final String FXML_FILE_NAME_FOR_ITEM_VIEW = "item-view.fxml";
     private static final String FXML_FILE_NAME_FOR_REPORT_VIEW = "report-view.fxml";
     private static final String VIEW_TITLE_FOR_ADDING_ITEM_ATTRIBUTES = "Add attributes";
-    private static final String VIEW_TITLE_FOR_IMPORTING_ITEM_ATTRIBUTES = "Import attributes";
     private static final String VIEW_TITLE_FOR_REPORT = "Report";
     private static final String WARNING_TITLE = "Warning";
     private static final String INFORMATION_TITLE = "Information";
@@ -49,10 +48,8 @@ public class MainController implements Initializable {
     private static final int MIN_ITEM_PANE_HEIGHT = 500;
     private static final int MIN_REPORT_PANE_WIDTH = 350;
     private static final int MIN_REPORT_PANE_HEIGHT = 300;
-
     private ButtonType okButton;
     private ButtonType cancelButton;
-
     @FXML
     private Parent mainPane;
     @FXML
@@ -129,7 +126,7 @@ public class MainController implements Initializable {
                 };
             }
         });
-        tableColumnOrdinalNumber.setSortable(false);
+        tableColumnOrdinalNumber.setSortable(true);
         tableColumnItemName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         itemTable.setRowFactory(param -> {
