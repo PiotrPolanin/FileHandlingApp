@@ -11,8 +11,8 @@
             <center>
                 <TableView fx:id="itemTable" BorderPane.alignment="CENTER">
                     <columns>
-                        <TableColumn fx:id="tableColumnOrdinalNumber" maxWidth="-1.0" minWidth="300.0" prefWidth="300.0" text="No" />
-                        <TableColumn fx:id="tableColumnItemName" maxWidth="-1.0" minWidth="700.0" prefWidth="700.0" text="Name" />
+                        <TableColumn fx:id="tableColumnOrdinalNumber" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" text="No" />
+                        <TableColumn fx:id="tableColumnItemName" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" text="Name" />
                     </columns>
                     <BorderPane.margin>
                         <Insets bottom="25.0" left="15.0" right="15.0" top="15.0" />
