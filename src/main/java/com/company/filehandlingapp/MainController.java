@@ -46,7 +46,7 @@ public class MainController implements Initializable {
     private static final String CANCEL_BUTTON_LABEL = "Cancel";
     private static final int MIN_ITEM_PANE_WIDTH = 350;
     private static final int MIN_ITEM_PANE_HEIGHT = 500;
-    private static final int MIN_REPORT_PANE_WIDTH = 350;
+    private static final int MIN_REPORT_PANE_WIDTH = 275;
     private static final int MIN_REPORT_PANE_HEIGHT = 300;
     private ButtonType okButton;
     private ButtonType cancelButton;

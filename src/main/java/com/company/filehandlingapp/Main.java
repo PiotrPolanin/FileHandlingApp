@@ -14,8 +14,8 @@ public class Main extends Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
     private static final String MAIN_APPLICATION_TITLE = "Item's Management App";
-    private static final double MIN_WIDTH = 1000;
-    private static final double MIN_HEIGHT = MIN_WIDTH * 0.75;
+    private static final double MIN_WIDTH = 1250;
+    private static final double MIN_HEIGHT = MIN_WIDTH * 0.55;
     private static final double MAX_WIDTH = MIN_WIDTH + Math.round(MIN_WIDTH * 0.4);
     private static final double MAX_HEIGHT = MIN_HEIGHT + Math.round(MAX_WIDTH * 0.4);
 

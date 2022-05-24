@@ -66,7 +66,7 @@ public class ItemController implements Initializable {
     private static final String DEFAULT_TITLE_MESSAGE = "Message";
     private static final String ADD_ITEM_OPERATION_ERROR_MESSAGE = "Type and amount attributes are required";
     private static final String SAVE_ITEM_ERROR_MESSAGE = "Name and at least one operation are required";
-    private static final int MIN_REPORT_PANE_WIDTH = 350;
+    private static final int MIN_REPORT_PANE_WIDTH = 275;
     private static final int MIN_REPORT_PANE_HEIGHT = 300;
 
     @Override
