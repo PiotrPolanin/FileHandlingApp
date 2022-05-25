@@ -19,7 +19,7 @@ public class ItemOperationConverter implements OperationConverter<ItemOperation>
                 String operation = separatedInput[0].toLowerCase(Locale.ROOT).trim();
                 String amount = separatedInput[1].trim();
                 if (validateOperationType(operation) && validateAmount(amount)) {
-                    ItemOperation itemOperation = new ItemOperation(ItemOperationType.valueOf(operation.toUpperCase(Locale.ROOT)), Integer.valueOf(amount));
+                    ItemOperation itemOperation = new ItemOperation(ItemOperationType.valueOf(operation.toUpperCase(Locale.ROOT)), Integer.valueOf(Math.abs(Integer.valueOf(amount))));
                     result.add(itemOperation);
                 }
             }

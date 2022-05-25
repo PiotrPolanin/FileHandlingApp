@@ -6,6 +6,7 @@ import com.company.filehandlingapp.model.item.ItemOperationType;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,5 +95,53 @@ public class ItemOperationConverterTest extends SupportShareTest {
         assertEquals(resultForItemYFile.get(7).getAmount(), Integer.valueOf(21));
     }
 
+    @Test
+    public void shouldConvertReturnReducedListWhenSomeElementsOfParameterListAreNotValid() {
+        //Given
+        List<String> someInvalidData = new LinkedList<>();
+        someInvalidData.add("supply,58");
+        someInvalidData.add("b,a");
+        someInvalidData.add(" , ");
+        someInvalidData.add("buy,16");
+        someInvalidData.add("spply,5");
+        someInvalidData.add("by,10");
+        someInvalidData.add("buy,@");
+        //When
+        List<ItemOperation> convertedResults = ioc.convert(someInvalidData, ",");
+        //Then
+        assertEquals(2, convertedResults.size());
+        assertEquals("supply", convertedResults.get(0).getOperationType().getValue());
+        assertEquals(58, convertedResults.get(0).getAmount().intValue());
+        assertEquals("buy", convertedResults.get(1).getOperationType().getValue());
+        assertEquals(16, convertedResults.get(1).getAmount().intValue());
+    }
+
+    @Test
+    public void shouldConvertReturnCorrectResultWhenSomeElementsOfParameterListAreNegativeOrUpperLowerCase() {
+        //Given
+        List<String> values = new LinkedList<>();
+        values.add("suPPly , 78");
+        values.add("buY , -23");
+        values.add("SUPPLY , -3");
+        values.add(" bUy , 44");
+        values.add("SUPPLY , -5");
+        values.add(" supply   , 8 ");
+        //When
+        List<ItemOperation> convertedResults = ioc.convert(values, ",");
+        //Then
+        assertEquals(6, convertedResults.size());
+        assertEquals("supply", convertedResults.get(0).getOperationType().getValue());
+        assertEquals(78, convertedResults.get(0).getAmount().intValue());
+        assertEquals("buy", convertedResults.get(1).getOperationType().getValue());
+        assertEquals(23, convertedResults.get(1).getAmount().intValue());
+        assertEquals("supply", convertedResults.get(2).getOperationType().getValue());
+        assertEquals(3, convertedResults.get(2).getAmount().intValue());
+        assertEquals("buy", convertedResults.get(3).getOperationType().getValue());
+        assertEquals(44, convertedResults.get(3).getAmount().intValue());
+        assertEquals("supply", convertedResults.get(4).getOperationType().getValue());
+        assertEquals(5, convertedResults.get(4).getAmount().intValue());
+        assertEquals("supply", convertedResults.get(5).getOperationType().getValue());
+        assertEquals(8, convertedResults.get(5).getAmount().intValue());
+    }
 
 }
