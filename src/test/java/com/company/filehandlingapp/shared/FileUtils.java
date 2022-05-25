@@ -20,4 +20,15 @@ public class FileUtils {
         }
     }
 
+    public static void createDirectory(String directoryPath) {
+        Path dp = Path.of(directoryPath);
+        if (!Files.exists(dp)) {
+            try {
+                Files.createDirectory(dp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

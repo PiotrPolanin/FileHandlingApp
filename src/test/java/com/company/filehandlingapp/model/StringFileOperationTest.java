@@ -3,6 +3,7 @@ package com.company.filehandlingapp.model;
 import com.company.filehandlingapp.model.file.StringFileOperation;
 import com.company.filehandlingapp.shared.FileUtils;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,8 +16,13 @@ public class StringFileOperationTest extends SupportShareTest {
     private final StringFileOperation sfo = new StringFileOperation();
     private static final String PATH_TO_TEMP_DIRECTORY = "src/test/resources/temp";
 
+    @BeforeAll
+    public static void setup() {
+        FileUtils.createDirectory(PATH_TO_TEMP_DIRECTORY);
+    }
+
     @AfterAll
-    public static void tearDown() {
+    public static void clear() {
         FileUtils.removeFilesFromDirectory(PATH_TO_TEMP_DIRECTORY);
     }
 
@@ -95,6 +101,13 @@ public class StringFileOperationTest extends SupportShareTest {
         //Then
         assertTrue(sfo.write("src/test/resources/temp/savedItemX.csv", refItemOperationForItemXFile));
         assertTrue(sfo.write("src/test/resources/temp/savedItemY.csv", refItemOperationForItemYFile));
+    }
+
+    @Test
+    public void writeShouldReturnTrueWhenFileIsOverridden() {
+        //Then
+        assertTrue(sfo.write("src/test/resources/temp/savedItemZ.csv", refItemOperationForItemXFile));
+        assertTrue(sfo.write("src/test/resources/temp/savedItemZ.csv", refItemOperationForItemYFile));
     }
 
 }
